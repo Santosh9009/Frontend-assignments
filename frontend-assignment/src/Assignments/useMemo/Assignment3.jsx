@@ -1,0 +1,42 @@
+import React, { useState, useMemo } from "react";
+// You have been given a list of items you shopped from the grocery store
+// You need to calculate the total amount of money you spent
+
+export const Assignment3 = () => {
+  const [items, setItems] = useState([
+    { name: "Chocolates", value: 10 },
+    { name: "Chips", value: 20 },
+    { name: "Onion", value: 30 },
+    { name: "Tomato", value: 30 },
+    // Add more items as needed
+  ]);
+  // Your code starts here
+  const totalValue = useMemo(() => {
+    let sum=0;
+    for(let i=0; i<items.length;i++){
+        sum+=items[i].value;
+    }
+    console.log(sum)
+   return sum;
+  },[items])
+
+  function handleclick(){
+    const updateditems= items.map(item=>({...item, value: item.value+10}))
+    setItems(updateditems)
+  }
+
+  // Your code ends here
+  return (
+    <div>
+      <ul>
+        {items.map((item, index) => (
+          <li key={index}>
+            {item.name} - Price: ${item.value}
+          </li>
+        ))}
+      </ul>
+      <button onClick={handleclick}>click me</button>
+      <p>Total Value: {totalValue}</p>
+    </div>
+  );
+};
