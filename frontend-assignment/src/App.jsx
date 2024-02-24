@@ -1,38 +1,58 @@
-import { useNavigate } from "react-router-dom";
 import "./App.css";
-import { useContext, useState } from "react";
-import { CountContext } from "./context";
+import { RecoilRoot, useRecoilValue, useSetRecoilState } from "recoil";
+import { EvenSelector, countAtom } from "./store/atom/count";
 
 
 function App() {
-  const [count, setcount]=useState(0);
-
+console.log('main')
   return (
-    <CountContext.Provider value={{count,setcount}}>
-      <Count count={count} setcount={setcount}/>
-    </CountContext.Provider>
+    <RecoilRoot>
+      <Count/>
+    </RecoilRoot>
   );
 }
 
-function Count({count}){
+function Count(){
+  console.log('count')
   return (
     <div>
-      <div>the count is {count}</div>
+      <CountRender/>
+      <br/>
+      <EvencountRender/>
       <br />
-      <Buttons count={count}/>
+      <Buttons/>
     </div>
   )
 }
-function Buttons() {
 
-   const context= useContext(CountContext);
+function EvencountRender(){
+  const isEven = useRecoilValue(EvenSelector);
+
+  if(!isEven){
+    return <div>it is even</div>
+  }else{
+    null
+  }
+}
+
+function CountRender(){
+  const count=useRecoilValue(countAtom);
+  return (
+    <div>
+      the count is {count}
+    </div>
+  )
+}
+
+function Buttons() {
+   const setcount= useSetRecoilState(countAtom);
   return (
     <div>
      <button onClick={()=>{
-      context.setcount(context.count+1)
+      setcount(c=>c+1)
      }}>increase</button>
      <button onClick={()=>{
-      context.setcount(context.count-1)
+      setcount(c=>c-1)
      }}>decrease</button>
     </div>
   );
