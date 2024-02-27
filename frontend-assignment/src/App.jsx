@@ -4,7 +4,6 @@ import { EvenSelector, countAtom } from "./store/atom/count";
 
 
 function App() {
-console.log('main')
   return (
     <RecoilRoot>
       <Count/>
@@ -13,7 +12,6 @@ console.log('main')
 }
 
 function Count(){
-  console.log('count')
   return (
     <div>
       <CountRender/>
